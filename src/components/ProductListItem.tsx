@@ -1,12 +1,7 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import Colors from "../constants/Colors";
+import { Product } from "../types";
 
-export type Product = {
-  id: number;
-  name: string;
-  image: string;
-  price: number;
-};
 
 interface Props {
   product: Product
@@ -17,7 +12,7 @@ const ProductListItem: React.FC<Props> = ({ product }) => {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={{ uri: product.image }} />
+      {product.image && <Image style={styles.image} source={{ uri: product.image }} />}
       <Text style={styles.title}>{product.name}</Text>
       <Text style={styles.price}>{product.price}</Text>
     </View>
