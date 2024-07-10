@@ -1,6 +1,7 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import Colors from "../constants/Colors";
 import { Product } from "../types";
+import { Link } from "expo-router";
 
 
 interface Props {
@@ -8,21 +9,21 @@ interface Props {
 };
 
 const ProductListItem: React.FC<Props> = ({ product }) => {
-  console.log(product);
-
   return (
-    <View style={styles.container}>
-      {
-        product.image &&
-        <Image
-          style={styles.image}
-          source={{ uri: product.image }}
-          resizeMode='contain'
-        />
-      }
-      <Text style={styles.title}>{product.name}</Text>
-      <Text style={styles.price}>{product.price}</Text>
-    </View>
+    <Link href={`menu/${product.id}`} asChild>
+      <Pressable style={styles.container}>
+        {
+          product.image &&
+          <Image
+            style={styles.image}
+            source={{ uri: product.image }}
+            resizeMode='contain'
+          />
+        }
+        <Text style={styles.title}>{product.name}</Text>
+        <Text style={styles.price}>{product.price}</Text>
+      </Pressable>
+    </Link >
   );
 };
 
