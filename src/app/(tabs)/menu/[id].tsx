@@ -1,19 +1,29 @@
-import { View, Text, Image, StyleSheet, Pressable } from 'react-native'
-import React, { useState } from 'react'
-import { Stack, useLocalSearchParams } from 'expo-router'
 import products from '@/assets/data/products';
 import Button from '@/src/components/Button';
+import { useCart } from '@/src/providers/CartProvider';
+import { PizzaSize } from '@/src/types';
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
+import React, { useState } from 'react';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 
-const sizes = ['S', 'M', 'L', 'XL'];
+const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL'];
 
 const ProdductDetailsScreen = () => {
   const { id } = useLocalSearchParams();
-  const [selectedSize, setSelectedSize] = useState('M');
+  const [selectedSize, setSelectedSize] = useState<PizzaSize>('M');
+
+  const router = useRouter();
+  const { addItem } = useCart();
 
   const product = products.find((p) => p.id.toString() === id);
 
   const addToCard = () => {
-    console.warn('Adding to card, size:', selectedSize);    
+    if (!product) {
+      return;
+    }
+
+    addItem(product, selectedSize);
+    router.push('/cart');
   };
 
   if (!product) {
@@ -34,6 +44,7 @@ const ProdductDetailsScreen = () => {
       <View style={styles.sizes}>
         {sizes.map((size) => (
           <Pressable
+            key={size}
             style={[
               styles.size,
               {
@@ -43,13 +54,14 @@ const ProdductDetailsScreen = () => {
             onPress={() => setSelectedSize(size)}
           >
             <Text
-              key={size}
               style={[
                 styles.sizeText,
                 {
                   color: size === selectedSize ? 'black' : 'gray'
                 },
-              ]}>{size}</Text>
+              ]}>
+              {size}
+            </Text>
           </Pressable>
         ))}
       </View>
