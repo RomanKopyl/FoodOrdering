@@ -67,6 +67,18 @@ const CreateProductScreen = () => {
     }
 
     console.warn('create');
+    // const imagePath = await uploadImage();
+
+    // // Save in the database
+    // insertProduct(
+    //   { name, price: parseFloat(price), image: imagePath },
+    //   {
+    //     onSuccess: () => {
+    //       resetFields();
+    //       router.back();
+    //     },
+    //   }
+    // );
   };
 
   const onUpdate = async () => {
@@ -76,10 +88,28 @@ const CreateProductScreen = () => {
 
     console.warn('update');
 
+    // const imagePath = await uploadImage();
+
+    // updateProduct(
+    //   { id, name, price: parseFloat(price), image: imagePath },
+    //   {
+    //     onSuccess: () => {
+    //       resetFields();
+    //       router.back();
+    //     },
+    //   }
+    // );
   };
 
   const onDelete = () => {
     console.warn('delete');
+    
+    // deleteProduct(id, {
+    //   onSuccess: () => {
+    //     resetFields();
+    //     router.replace('/(admin)');
+    //   },
+    // });
   };
 
   const confirmDelete = () => {
