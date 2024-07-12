@@ -1,4 +1,4 @@
-import { Link } from "expo-router";
+import { Link, useSegments } from "expo-router";
 import { Image, Pressable, StyleSheet, Text } from "react-native";
 import Colors from "../constants/Colors";
 import { Product } from "../types";
@@ -11,8 +11,10 @@ interface Props {
 };
 
 const ProductListItem: React.FC<Props> = ({ product }) => {
+  const segmets = useSegments();
+
   return (
-    <Link href={`menu/${product.id}`} asChild>
+    <Link href={`/${segmets[0]}/menu/${product.id}`} asChild>
       <Pressable style={styles.container}>
         <Image
           style={styles.image}
