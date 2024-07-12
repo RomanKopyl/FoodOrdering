@@ -11,7 +11,7 @@ export default function Menustack() {
         options={{
           title: 'Menu',
           headerRight: () => (
-            <Link href="/cart" asChild>
+            <Link href="/(admin)/menu/create" asChild>
               <Pressable>
                 {({ pressed }) => (
                   <FontAwesome
