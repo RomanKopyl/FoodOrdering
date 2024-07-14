@@ -1,10 +1,20 @@
 
+import { useProductList } from '@/src/api/products';
 import ProductListItem from '@/src/components/ProductListItem';
-import { FlatList } from 'react-native';
-import products from '@assets/data/products';
+import { ActivityIndicator, FlatList, Text } from 'react-native';
 
 
 export default function TabOneScreen() {
+  const { data: products, error, isLoading } = useProductList();
+
+  if (isLoading) {
+    return <ActivityIndicator />;
+  }
+
+  if (error) {
+    return <Text>Failed to fetch product</Text>
+  }
+
   return (
     <FlatList
       data={products}
