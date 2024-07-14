@@ -12,14 +12,13 @@ const CreateProductScreen = () => {
   const [price, setPrice] = useState('');
   const [errors, setErrors] = useState('');
   const [image, setImage] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingDelete, setIsLoadingDelete] = useState(false);
+  const disabled = isLoading || isLoadingDelete;
 
   const { id: idString } = useLocalSearchParams();
   let id;
-  if (!idString) {
-    Alert.alert('Id is undefined');
-    return;
-  }
-  id = parseFloat(typeof idString == 'string' ? idString : idString[0]);
+  id = parseFloat(typeof idString == 'string' ? idString : (idString?.[0] ?? ''));
   const { data: updatingProduct } = useProduct(id);
 
   const isUpdating = !!idString;
@@ -77,6 +76,8 @@ const CreateProductScreen = () => {
 
   const onSubmit = () => {
     if (isUpdating) {
+      console.log('HERE');
+      
       onUpdate();
     } else {
       onCreate();
@@ -87,14 +88,15 @@ const CreateProductScreen = () => {
     if (!validateInput()) {
       return;
     }
-
     // Save in the database
+    setIsLoading(true);
     insertProduct(
       { name, price: parseFloat(price), image },
       {
         onSuccess: () => {
           resetFields();
           router.back();
+          setIsLoading(false);
         },
       }
     );
@@ -106,12 +108,13 @@ const CreateProductScreen = () => {
     }
 
     // const imagePath = await uploadImage();
-
+    setIsLoading(true);
     updateProduct(
       { id, name, price: parseFloat(price), image },
       {
         onSuccess: () => {
           resetFields();
+          setIsLoading(false);
           router.back();
         },
       }
@@ -119,10 +122,12 @@ const CreateProductScreen = () => {
   };
 
   const onDelete = () => {
+    setIsLoadingDelete(true);
     deleteProduct(id, {
       onSuccess: () => {
         resetFields();
         router.replace('/(admin)');
+        setIsLoadingDelete(false);
       },
     });
   };
@@ -175,12 +180,19 @@ const CreateProductScreen = () => {
       <Button
         onPress={onSubmit}
         text={isUpdating ? "Update" : "Create"}
+        isLoading={isLoading}
+        disabled={disabled}
       />
-      {isUpdating && (
-        <Text onPress={confirmDelete} style={styles.textButton}>
-          Delete
-        </Text>
-      )}
+      {
+        isUpdating && (
+          <Text
+            disabled={disabled}
+            onPress={confirmDelete}
+            style={styles.textButton}
+          >
+            {isLoadingDelete ? 'Deleting...' : 'Delete'}
+          </Text>
+        )}
     </View>
   )
 }
