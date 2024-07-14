@@ -1,13 +1,13 @@
 import { Link, useSegments } from "expo-router";
 import { Image, Pressable, StyleSheet, Text } from "react-native";
 import Colors from "../constants/Colors";
-import { Product } from "../types";
+import { Tables } from "../database.types";
 
 export const defaultPizzaImage =
   'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png';
 
 interface Props {
-  product: Product
+  product: Tables<'products'>
 };
 
 const ProductListItem: React.FC<Props> = ({ product }) => {
