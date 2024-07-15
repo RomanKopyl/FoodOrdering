@@ -46,7 +46,7 @@ const ProdductDetailsScreen = () => {
     <View style={styles.container}>
       <Stack.Screen options={{ title: product?.name }} />
       <Image
-        source={{ uri: product.image ?? defaultPizzaImage }}
+        source={{ uri: product?.image ?? defaultPizzaImage }}
         style={styles.image} />
 
       <Text>Select size</Text>
@@ -75,7 +75,7 @@ const ProdductDetailsScreen = () => {
         ))}
       </View>
 
-      <Text style={styles.price}>Price: ${product.price}</Text>
+      <Text style={styles.price}>Price: ${product?.price}</Text>
 
       <Button onPress={addToCard} text={'Add to card'} />
     </View>

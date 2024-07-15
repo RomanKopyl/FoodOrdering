@@ -6,10 +6,10 @@ import CartListItem from '../components/CartListItem';
 import { useCart } from '../providers/CartProvider';
 
 const CartScreen = () => {
-  const { items, total } = useCart();
+  const { items, total, checkout } = useCart();
 
   return (
-    <View style={{ padding: 10 }}>
+    <View style={styles.container}>
       <FlatList
         data={items}
         renderItem={({ item }) => <CartListItem cartItem={item} />}
@@ -19,7 +19,7 @@ const CartScreen = () => {
         marginTop: 20,
         fontSize: 20,
       }}>Total: {total}</Text>
-      <Button text="Chechout" />
+      <Button onPress={checkout} text="Chechout" />
 
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
     </View>
@@ -29,6 +29,9 @@ const CartScreen = () => {
 export default CartScreen;
 
 const styles = StyleSheet.create({
+  container: {
+    padding: 10,
+  },
   contentContainerStyle: {
     padding: 10,
     gap: 10,
