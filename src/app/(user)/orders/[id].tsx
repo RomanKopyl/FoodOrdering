@@ -1,4 +1,5 @@
 import { useOrderDetails } from '@/src/api/orders';
+import { useUpdateOrderSubscriptions } from '@/src/api/orders/subscritptions';
 import OrderItemListItem from '@/src/components/OrderItemListItem';
 import OrderListItem from '@/src/components/OrderListItem';
 import { Stack, useLocalSearchParams } from 'expo-router';
@@ -13,6 +14,8 @@ const OrderDetailScreen = () => {
   }
   id = parseFloat(typeof idString == 'string' ? idString : idString[0]);
   const { data: order, isLoading, error } = useOrderDetails(id);
+
+  useUpdateOrderSubscriptions(id);
 
   if (isLoading) {
     return <ActivityIndicator />;
