@@ -1,10 +1,11 @@
 import { Session } from "@supabase/supabase-js";
 import { PropsWithChildren, createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
+import { Tables } from "../types";
 
 type AuthData = {
   session: Session | null
-  profile: any
+  profile: Tables<'profiles'>
   loading: boolean
   isAdmin: boolean
 };

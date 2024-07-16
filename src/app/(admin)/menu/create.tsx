@@ -114,8 +114,8 @@ const CreateProductScreen = () => {
       return;
     }
 
-    const imagePath = await uploadImage();
     setIsLoading(true);
+    const imagePath = await uploadImage();
     updateProduct(
       { id, name, price: parseFloat(price), image: imagePath },
       {

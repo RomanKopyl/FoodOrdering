@@ -15,7 +15,7 @@ const Button = forwardRef<View | null, ButtonProps>(
       <Pressable
         ref={ref}
         {...pressableProps}
-        disabled={disabled}
+        disabled={disabled || isLoading}
         style={[
           { opacity: (isLoading || disabled) ? 0.5 : 1 },
           styles.container

@@ -5,6 +5,7 @@ import Colors from '../constants/Colors';
 import { useCart } from '../providers/CartProvider';
 import { CartItem } from '../types';
 import { defaultPizzaImage } from './ProductListItem';
+import RemoteImage from './RemoteImage';
 
 type CartListItemProps = {
   cartItem: CartItem;
@@ -15,10 +16,11 @@ const CartListItem = ({ cartItem }: CartListItemProps) => {
 
   return (
     <View style={styles.container}>
-      <Image
-        source={{ uri: cartItem.product.image ?? defaultPizzaImage }}
+      <RemoteImage
+        path={cartItem.product.image}
+        fallback={defaultPizzaImage}
         style={styles.image}
-        resizeMode="contain"
+        resizeMode='contain'
       />
       <View style={{ flex: 1 }}>
         <Text style={styles.title}>{cartItem.product.name}</Text>
