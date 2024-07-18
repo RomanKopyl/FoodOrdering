@@ -5,7 +5,7 @@ import { Tables } from "../types";
 
 type AuthData = {
   session: Session | null
-  profile: Tables<'profiles'>
+  profile: Tables<'profiles'> | null
   loading: boolean
   isAdmin: boolean
 };
@@ -19,7 +19,7 @@ export const AuthContext = createContext<AuthData>({
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [session, setSession] = useState<Session | null>(null);
-  const [profile, setProfile] = useState(null);
+  const [profile, setProfile] = useState<Tables<'profiles'> | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -37,6 +37,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
           .eq('id', session.user.id)
           .single();
         setProfile(data ?? null);
+        console.log('DATA', data);        
       }
 
       setLoading(false);
