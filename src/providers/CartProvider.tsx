@@ -3,6 +3,7 @@ import { useRouter } from 'expo-router';
 import { PropsWithChildren, createContext, useContext, useState } from "react";
 import { useInsertOrder } from '../api/orders';
 import { useInsertOrderItems } from '../api/ordersItems';
+import { initialisePaymetSheet, openPaymentSheet } from '../lib/stripe';
 import { CartItem, Product, Tables } from "../types";
 
 type CartType = {
@@ -72,7 +73,13 @@ const CartProvider = ({ children }: PropsWithChildren) => {
     setItems([]);
   };
 
-  const checkout = () => {
+  const checkout = async () => {
+    await initialisePaymetSheet(total * 100);
+    const payed = await openPaymentSheet();
+    if (!payed) {
+      return;
+    }
+
     insertOrder(
       { total },
       {
