@@ -12,22 +12,32 @@ const fetchPaymentSheetParams = async (amount: number) => {
   if (data) {
     return data;
   }
+
   Alert.alert(`Error: ${error?.message ?? 'no data'}`);
   return {};
 };
 
 export const initialisePaymetSheet = async (amount: number) => {
-  const { paymentIntent, publishableKey } = await fetchPaymentSheetParams(amount);
+  const {
+    paymentIntent,
+    publishableKey,
+    customer,
+    ephemeralKey,
+  } = await fetchPaymentSheetParams(amount);
 
-  if (!publishableKey || !paymentIntent) return;
+  if (!publishableKey || !paymentIntent) return false;
 
   const { error } = await initPaymentSheet({
     merchantDisplayName: 'RomanK inc.',
     paymentIntentClientSecret: paymentIntent,
+    customerId: customer,
+    customerEphemeralKeySecret: ephemeralKey,
     defaultBillingDetails: {
       name: 'Іван Іваненко',
     },
   });
+
+  return true;
 };
 
 export const openPaymentSheet = async () => {

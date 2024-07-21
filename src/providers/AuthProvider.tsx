@@ -36,9 +36,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
           .select('*')
           .eq('id', session.user.id)
           .single();
-        setProfile(data ?? null);
-        console.log('DATA', data);        
-      }
+        setProfile(data ?? null);     
+      };
 
       setLoading(false);
     };
